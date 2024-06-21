@@ -4,6 +4,15 @@ pipeline {
         // Определение переменной для имени, которое будет использоваться в скрипте
         NAME = 'Anton'
     }
+    triggers {
+        // Опрос GIT репозитория на предмет изменений каждые 5 минут
+        pollSCM('H/5 * * * *')
+    }
+    parameters {
+        // Параметр для запуска пайплайна, позволяющий задать имя
+        string(name: 'STUDENT_NAME', defaultValue: 'Anton', description: 'Имя студента')
+    }
+    stages {
         stage('Run Script') {
             steps {
                 // Запуск скрипта hello.py с передачей имени через аргумент --name
@@ -20,3 +29,4 @@ pipeline {
             }
         }
     }
+}
