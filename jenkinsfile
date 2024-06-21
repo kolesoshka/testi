@@ -20,6 +20,12 @@ pipeline {
                 url: 'https://github.com/kolesoshka/testi'
             }
         }
+		stage('Install Dependencies') {
+            steps {
+                // Установка зависимостей из файла requirements.txt
+                sh 'pip install -r requirements.txt'
+            }
+        }
         stage('Run Script') {
             steps {
                 // Запуск скрипта hello.py с передачей имени через аргумент --name
