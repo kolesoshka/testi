@@ -1,28 +1,23 @@
 pipeline {
     agent any
-    environment {
-        // Определение переменной для имени, которое будет использоваться в скрипте
-        NAME = 'Anton'
-    }
     triggers {
         // Опрос GIT репозитория на предмет изменений каждые 5 минут
         pollSCM('H/5 * * * *')
     }
     parameters {
         // Параметр для запуска пайплайна, позволяющий задать имя
-        string(name: 'STUDENT_NAME', defaultValue: 'Anton', description: 'Имя студента')
+        string(name: 'STUDENT_NAME', description: 'Name Stud')
     }
     stages {
-		stage('Clone Repository') {
+		stage('CopyRepo') {
             steps {
-                // Клонирование GIT репозитория
+                // Клонирование GIT репозитория с веткой main
 				git branch: 'main',
                 url: 'https://github.com/kolesoshka/testi'
             }
         }
 		stage('Install Dependencies') {
             steps {
-                // Установка зависимостей из файла requirements.txt
                 sh 'pip install -r requirements.txt'
             }
         }
@@ -35,9 +30,8 @@ pipeline {
                 }
             }
         }
-        stage('Archive Results') {
+        stage('Save Results') {
             steps {
-                // Сохранение файла result.txt как артефакт сборки
                 archiveArtifacts artifacts: 'result.txt', onlyIfSuccessful: true
             }
         }
