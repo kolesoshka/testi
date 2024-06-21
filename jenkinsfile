@@ -17,7 +17,7 @@ pipeline {
             steps {
                 // Клонирование GIT репозитория
 				git branch: 'main',
-                git 'https://github.com/kolesoshka/testi.git'
+                url: 'https://github.com/kolesoshka/testi'
             }
         }
         stage('Run Script') {
